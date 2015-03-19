@@ -1,0 +1,22 @@
+{
+  "name": "restify-seed",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "yisbug",
+  "license": "ISC",
+  "devDependencies": {
+    "async": "^0.9.0",
+    "grunt": "^0.4.5",
+    "grunt-contrib-coffee": "^0.13.0",
+    "grunt-shell": "^1.1.2",
+    "mongoose": "^3.8.25",
+    "restify": "^3.0.1"
+  }
+}
