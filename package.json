@@ -1,7 +1,7 @@
 {
-  "name": "restify-seed",
-  "version": "1.0.0",
-  "description": "",
+  "name": "restify-curd",
+  "version": "1.0.1",
+  "description": "npm install restify-curd",
   "main": "index.js",
   "directories": {
     "test": "test"
@@ -18,5 +18,21 @@
     "grunt-shell": "^1.1.2",
     "mongoose": "^3.8.25",
     "restify": "^3.0.1"
-  }
+  },
+  "dependencies": {
+    "async": "^0.9.0",
+    "grunt-shell": "^1.1.2",
+    "grunt-contrib-coffee": "^0.13.0",
+    "grunt": "^0.4.5",
+    "mongoose": "^3.8.25",
+    "restify": "^3.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yisbug/restify-curd.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yisbug/restify-curd/issues"
+  },
+  "homepage": "https://github.com/yisbug/restify-curd"
 }
