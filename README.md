@@ -1,4 +1,7 @@
-# npm restify 模块种子
+# restify-curd
+
+通用的collection操作，包含`GET`,`POST`,`PATCH`,`DEL`等。
+
 
 ### Installation
 
