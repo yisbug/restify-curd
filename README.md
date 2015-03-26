@@ -3,6 +3,10 @@
 通用的collection操作，包含`GET`,`POST`,`PATCH`,`DEL`等。
 
 ### 更新
+#### 1.0.4
+
+* 增加一个options参数childs，可以指定查询内嵌文档
+* 增加一个批量删除接口
 
 #### 1.0.3
 
@@ -48,7 +52,13 @@ options参数
 * `put` boolean 是否开放修改接口，默认开放
 * `patch` boolean 是否开放修改接口，默认开放
 * `del` boolean 是否开放删除接口，默认开放
+* `delAll` boolean 是否开放批量删除接口，默认开放
 * `path` String 路由资源地址，默认为Model.modelName
+* `childs` Array/Object 指定一个内嵌文档字段和开放的接口
+
+childs参数：
+* `list` `post` `get` `put` `patch` `del` `delAll`
+* `path` 内嵌文档的字段名称和路径
 
 ### 其他默认设置
 
@@ -85,3 +95,20 @@ options参数
 返回该记录信息
 
 ### `DELETE /collection/:id` 删除指定id的记录
+
+### `DELETE /collection` 删除符合条件的记录
+参数：
+* 所有条件作为queryString
+
+
+## 内嵌文档
+
+当options参数中指定了childs参数时，会自动为内嵌文档增加对应的路由
+
+### `POST /collection/:id/child` 新增一个内嵌文档
+返回新建的记录。
+
+### `GET /collection/:id/child` 查询所有内嵌文档
+注意该地址和父文档不同，不支持分页排序等，只会返回所有记录。
+
+### 其他路由同父文档。

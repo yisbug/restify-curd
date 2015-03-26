@@ -19,11 +19,19 @@ describe 'test',->
         port = 8002
         db.once 'open',->
             curd = require '../coffee/index'
-            Animal = db.model 'animal',{
+            Animal = db.model 'animal',new mongoose.Schema({
                 name:String
                 age:Number
+                sons:[{
+                    name:String
+                    age:Number
+                }]
+            })
+            curd server,Animal,{
+                childs:[{
+                    path:'sons'
+                }]
             }
-            curd server,Animal
             server.listen port,->
                 console.log 'server start on test mode.'
                 done()
@@ -45,7 +53,17 @@ describe 'test',->
     resData = ''
     list = null
 
-    describe 'test',->
+    describe '主文档',->
+        it 'delAll',(done)->
+            len = 0
+            client.get '/animal',(err,req,res,obj)->
+                assert.ifError err
+                len = obj.count
+                client.del '/animal',(err,req,res,obj)->
+                    assert.ifError err
+                    len.should.be.equal obj
+                    done()
+
 
         it 'post',(done)->
             async.map [1..10],(item,cb)->
@@ -79,6 +97,7 @@ describe 'test',->
                         list[k+1] and list[k+1].createAt.should.not.be.above item.createAt
 
                 resData = obj.list[0]
+                id = obj.list[1]._id
                 done()
         it 'get list...limit',(done)->
             client.get '/animal?limit=2',(err,req,res,obj)->
@@ -151,3 +170,110 @@ describe 'test',->
                 assert.ifError err
                 obj.list.length.should.be.equal list.length-1
                 done()
+
+        it '批量删除',(done)->
+            tmpList = []
+            client.post '/animal',{
+                name:'等待删除'
+            },(err,req,res,obj)->
+                assert.ifError err
+                client.get '/animal',(err,req,res,obj)->
+                    assert.ifError err
+                    tmpList = obj.list
+                    name = encodeURI 'name=等待删除' 
+                    client.del '/animal?'+name,(err,req,res,obj)->
+                        assert.ifError err
+                        obj.should.be.equal 1
+                        client.get '/animal',(err,req,res,obj)->
+                            assert.ifError err
+                            obj.list.length.should.be.equal tmpList.length-1
+                            done()
+
+    describe '子文档',->
+        testData = {
+            name:'儿子1'
+            age:15
+        }
+        it 'post',(done)->
+            
+            client.post '/animal/'+id+'/sons',testData,(err,req,res,obj)->
+                assert.ifError err
+                obj.name.should.be.equal testData.name
+                obj.age.should.be.equal testData.age
+                client.get '/animal/'+id+'/sons/'+obj._id,(err,req,res,obj1)->
+                    assert.ifError err
+                    obj1.name.should.be.equal testData.name
+                    obj1.age.should.be.equal testData.age
+                    obj1._id.should.be.equal obj._id
+                    done()
+
+
+        it 'list',(done)->
+            client.get '/animal/'+id+'/sons',(err,req,res,obj)->
+                assert.ifError err
+                obj.list.length.should.be.equal 1
+                obj.list[0].name.should.be.equal testData.name
+                obj.list[0].age.should.be.equal testData.age
+                testData._id = obj.list[0]._id
+                done()
+        
+
+        list = []
+        it '批量插入一批数据',(done)->
+            async.map [1..10],(item,cb)->
+                tmpData = 
+                    name:Math.random() + '名称'
+                    age:Math.random()* 10 
+                client.post '/animal/'+id+'/sons',tmpData,(err,req,res,obj)->
+                    obj.name.should.be.equal tmpData.name
+                    obj.age.should.be.equal tmpData.age
+                    cb err
+            ,(err,results)->
+                assert.ifError err
+                client.get '/animal/'+id+'/sons',(err,req,res,obj)->
+                    assert.ifError err
+                    list = obj.list 
+                    done()
+
+        it '修改',(done)->
+            editData = {
+                name:'儿子'+Math.random()
+                age:12
+            }
+            index = parseInt(list.length*Math.random())
+            o = list[index]
+            client.put '/animal/'+id+'/sons/'+o._id,editData,(err,req,res,obj)->
+                assert.ifError err
+                obj.name.should.be.equal editData.name
+                obj.age.should.be.equal editData.age
+                client.get '/animal/'+id+'/sons',(err,req,res,obj)->
+                    assert.ifError err
+                    obj.list[index].name.should.be.equal editData.name
+                    obj.list[index].age.should.be.equal editData.age
+                    for item,i in obj.list
+                        if i is index
+                            item.name.should.be.equal editData.name
+                            item.age.should.be.equal editData.age
+                        else
+                            item.name.should.not.be.equal editData.name
+                            item.name.should.not.be.equal editData.age
+                    done()
+
+        it '删除',(done)->
+            index = parseInt(list.length*Math.random())
+            o = list[index]
+            client.del '/animal/'+id+'/sons/'+o._id,(err,req,res,obj)->
+                assert.ifError err
+                obj.should.be.equal 1
+                client.get '/animal/'+id+'/sons',(err,req,res,obj)->
+                    assert.ifError err
+                    obj.list.length.should.be.equal list.length-1
+                    done()
+        it '删除所有',(done)->
+            client.del '/animal/'+id+'/sons',(err,req,res,obj)->
+                assert.ifError err
+                obj.should.be.equal 1 
+                client.get '/animal/'+id+'/sons',(err,req,res,obj)->
+                    assert.ifError err
+                    obj.list.length.should.be.equal 0
+                    done()

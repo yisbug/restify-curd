@@ -1,6 +1,6 @@
 {
   "name": "restify-curd",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "npm install restify-curd",
   "main": "index.js",
   "directories": {
