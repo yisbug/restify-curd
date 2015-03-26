@@ -4,7 +4,7 @@
 
 ### 更新
 
-#### 1.0.2
+#### 1.0.3
 
 * 参数由原先的(server,db,modelName,schemaConfig,options)修改为(server,Model,options)
 * createAt和random字段由默认配置修改为schema动态添加
