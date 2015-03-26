@@ -2,6 +2,18 @@
 
 通用的collection操作，包含`GET`,`POST`,`PATCH`,`DEL`等。
 
+### 更新
+
+#### 1.0.2
+
+* 参数由原先的(server,db,modelName,schemaConfig,options)修改为(server,Model,options)
+* createAt和random字段由默认配置修改为schema动态添加
+* 如果传入的Model.schema中未设置createAt和random字段时，REST请求将无法获取这两个字段。
+* `options`参数增加一个字段`path`，标识路由路径，默认为`Model.modelName`，不需要加`/`
+
+
+
+
 
 ### Installation
 
@@ -17,7 +29,8 @@ curd = require 'restify-curd'
 server = restify.createServer()
 db = mongoose.createConnection 'mongodb://localhost/restify-curd-test'
 db.once 'open',->
-    curd (server,db,modelName,schemaConfig,options)
+    Model = db.model 'test',schema
+    curd (server,Model,options)
     server.listen port,->
         console.log 'server start.'
 ```
@@ -25,9 +38,7 @@ db.once 'open',->
 ### 参数
 
 * `server` object
-* `db` object
-* `modelName` string,collection名称
-* `schemaConfig` object,schema对象
+* `Model` mongoose Model
 * `options` object
 
 options参数
@@ -37,6 +48,7 @@ options参数
 * `put` boolean 是否开放修改接口，默认开放
 * `patch` boolean 是否开放修改接口，默认开放
 * `del` boolean 是否开放删除接口，默认开放
+* `path` String 路由资源地址，默认为Model.modelName
 
 ### 其他默认设置
 

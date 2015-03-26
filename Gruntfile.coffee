@@ -20,6 +20,6 @@ module.exports = (grunt)->
         fileName = arg1
         fileName += '.coffee' if not /\.coffee$/.test fileName
         fileName = 'test/'+fileName if not /^test\//.test fileName
-        grunt.config ['shell','mocha','command'],'mocha --compilers coffee:coffee-script/register -w ' + fileName if arg1
+        grunt.config ['shell','mocha','command'],'mocha --compilers coffee:coffee-script/register -w ' + fileName + ' -b' if arg1
         grunt.task.run 'shell:mocha'
         

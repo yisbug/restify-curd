@@ -375,7 +375,7 @@
 			"file": "README.md",
 			"settings":
 			{
-				"buffer_size": 135,
+				"buffer_size": 1339,
 				"line_ending": "Windows"
 			}
 		}
@@ -567,6 +567,10 @@
 		"side_bar_visible": true,
 		"status_bar_visible": false
 	},
+	"expanded_folders":
+	[
+		"/D/project/restify-curd"
+	],
 	"file_history":
 	[
 		"/D/project/restify-curd/package.json",
@@ -877,28 +881,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 135,
+						"buffer_size": 1339,
 						"regions":
 						{
-							"TagLint":
-							{
-								"flags": 2356,
-								"icon": "dot",
-								"regions":
-								[
-									[
-										70,
-										76
-									]
-								],
-								"scope": "variable.parameter"
-							}
 						},
 						"selection":
 						[
 							[
-								135,
-								135
+								64,
+								64
 							]
 						],
 						"settings":
@@ -1227,7 +1218,7 @@
 		[
 			[
 				"",
-				"D:\\project\\restify-curd\\restify.sublime-project"
+				"D:\\project\\restify-curd\\restify-curd.sublime-workspace"
 			],
 			[
 				"res",
