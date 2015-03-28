@@ -25,12 +25,17 @@ describe 'test',->
                 sons:[{
                     name:String
                     age:Number
+                    friends:[{
+                        name:String
+                        age:Number
+                    }]
                 }]
             })
             curd server,Animal,{
-                childs:[{
+                childs:
                     path:'sons'
-                }]
+                    childs:
+                        path:'friends'
             }
             server.listen port,->
                 console.log 'server start on test mode.'
@@ -50,6 +55,7 @@ describe 'test',->
 
 
     id = ''
+    sonid = ''
     resData = ''
     list = null
 
@@ -61,7 +67,9 @@ describe 'test',->
                 len = obj.count
                 client.del '/animal',(err,req,res,obj)->
                     assert.ifError err
-                    len.should.be.equal obj
+                    if typeof obj is 'object'
+                    else
+                        len.should.be.equal obj
                     done()
 
 
@@ -195,7 +203,6 @@ describe 'test',->
             age:15
         }
         it 'post',(done)->
-            
             client.post '/animal/'+id+'/sons',testData,(err,req,res,obj)->
                 assert.ifError err
                 obj.name.should.be.equal testData.name
@@ -207,7 +214,6 @@ describe 'test',->
                     obj1._id.should.be.equal obj._id
                     done()
 
-
         it 'list',(done)->
             client.get '/animal/'+id+'/sons',(err,req,res,obj)->
                 assert.ifError err
@@ -216,7 +222,6 @@ describe 'test',->
                 obj.list[0].age.should.be.equal testData.age
                 testData._id = obj.list[0]._id
                 done()
-        
 
         list = []
         it '批量插入一批数据',(done)->
@@ -274,6 +279,118 @@ describe 'test',->
                 assert.ifError err
                 obj.should.be.equal 1 
                 client.get '/animal/'+id+'/sons',(err,req,res,obj)->
+                    assert.ifError err
+                    obj.list.length.should.be.equal 0
+                    done()
+
+    describe '孙文档',->
+        testData = {
+            name:'朋友1'
+            age:17
+        }
+        list = []
+        sonid = ''
+        it '批量插入一批儿子',(done)->
+            async.map [1..3],(item,cb)->
+                tmpData = 
+                    name:Math.random() + '名称'
+                    age:Math.random()* 10 
+                client.post '/animal/'+id+'/sons',tmpData,(err,req,res,obj)->
+                    obj.name.should.be.equal tmpData.name
+                    obj.age.should.be.equal tmpData.age
+                    cb err
+            ,(err,results)->
+                assert.ifError err
+                client.get '/animal/'+id+'/sons',(err,req,res,obj)->
+                    assert.ifError err
+                    list = obj.list 
+                    sonid = list[0]._id
+                    done()
+        it 'post',(done)->
+            client.post '/animal/'+id+'/sons/'+sonid+'/friends',testData,(err,req,res,obj)->
+                assert.ifError err
+                for k,v of testData
+                    obj[k].should.be.equal v
+                client.get "/animal/#{id}/sons/#{sonid}/friends/#{obj._id}",(err,req,res,obj)->
+                    assert.ifError err
+                    for k,v of testData
+                        obj[k].should.be.equal v
+                    done()
+
+        it 'list',(done)->
+            client.get "/animal/#{id}/sons/#{sonid}/friends",(err,req,res,obj)->
+                assert.ifError err
+                obj.list.length.should.be.equal 1
+                obj.list[0].name.should.be.equal testData.name
+                obj.list[0].age.should.be.equal testData.age
+                done()
+        it '批量插入一批朋友',(done)->
+            async.map [1..5],(item,cb)->
+                tmpData = 
+                    name:Math.random() + '朋友'
+                    age:Math.random()* 10 
+                client.post '/animal/'+id+'/sons/'+sonid+'/friends',tmpData,(err,req,res,obj)->
+                    obj.name.should.be.equal tmpData.name
+                    obj.age.should.be.equal tmpData.age
+                    cb err
+            ,(err,results)->
+                assert.ifError err
+                client.get '/animal/'+id+'/sons/'+sonid+'/friends',(err,req,res,obj)->
+                    assert.ifError err
+                    list = obj.list 
+                    list.length.should.be.equal 6
+                    done()
+
+        it '修改',(done)->
+            editData = {
+                name:'朋友'+Math.random()
+                age:120
+            }
+            index = parseInt(list.length*Math.random())
+            o = list[index]
+            client.put '/animal/'+id+'/sons/'+sonid+'/friends/'+o._id,editData,(err,req,res,obj)->
+                assert.ifError err
+                obj.name.should.be.equal editData.name
+                obj.age.should.be.equal editData.age
+                client.get '/animal/'+id+'/sons/'+sonid+'/friends',(err,req,res,obj)->
+                    assert.ifError err
+                    obj.list[index].name.should.be.equal editData.name
+                    obj.list[index].age.should.be.equal editData.age
+                    for item,i in obj.list
+                        if i is index
+                            item.name.should.be.equal editData.name
+                            item.age.should.be.equal editData.age
+                        else
+                            item.name.should.not.be.equal editData.name
+                            item.name.should.not.be.equal editData.age
+                    done()
+
+        it '删除',(done)->
+            index = parseInt(list.length*Math.random())
+            o = list[index]
+            client.del '/animal/'+id+'/sons/'+sonid+'/friends/'+o._id,(err,req,res,obj)->
+                assert.ifError err
+                obj.should.be.equal 1
+                client.get '/animal/'+id+'/sons/'+sonid+'/friends',(err,req,res,obj)->
+                    assert.ifError err
+                    obj.list.length.should.be.equal list.length-1
+                    done()
+        it '删除特定条件',(done)->
+            client.post "/animal/#{id}/sons/#{sonid}/friends",{name:'test'},(err,req,res,obj)->
+                assert.ifError err
+                obj.name.should.be.equal 'test'
+                client.del "/animal/#{id}/sons/#{sonid}/friends?name=test",(err,req,res,obj)->
+                    assert.ifError err
+                    client.get "/animal/#{id}/sons/#{sonid}/friends",(err,req,res,obj)->
+                        for item in obj.list
+                            item.name.should.not.be.equal 'test'
+                        done()
+
+        it '删除所有',(done)->
+            client.del '/animal/'+id+'/sons/'+sonid+'/friends',(err,req,res,obj)->
+                assert.ifError err
+                obj.should.be.equal 1 
+                client.get '/animal/'+id+'/sons/'+sonid+'/friends',(err,req,res,obj)->
                     assert.ifError err
                     obj.list.length.should.be.equal 0
                     done()
