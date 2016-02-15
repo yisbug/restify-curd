@@ -20,7 +20,8 @@
     "grunt-shell": "^1.1.2",
     "mongoose": "^3.8.25",
     "restify": "^3.0.1",
-    "should": "*"
+    "should": "*",
+    "mocha":"*"
   },
   "dependencies": {
     "async": "0.9.0",
