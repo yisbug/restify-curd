@@ -9,6 +9,13 @@
 
 ### 更新
 
+#### 1.0.6
+
+* 使用了最新版本mongoose@4.4.3，固定package.json的依赖版本号
+* 修复了mongoose@4.x修改的findOneAndUpdate第三个参数导致的更新数据失败bug
+* 修正README.md
+* 添加了集成测试
+
 #### 1.0.5
 * childs参数支持最多3级
 * 当`put`,`patch`内嵌文档时，因为mongodb问题，更新操作非原子操作。

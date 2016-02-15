@@ -1,31 +1,30 @@
 {
   "name": "restify-curd",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "npm install restify-curd",
   "main": "index.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha --compilers coffee:coffee-script/register -b",
+    "compile":"grunt coffee:dev",
+    "prepublish":"npm run compile"
   },
   "author": "yisbug",
   "license": "ISC",
   "devDependencies": {
-    "async": "^0.9.0",
     "grunt": "^0.4.5",
-    "grunt-contrib-coffee": "^0.13.0",
+    "grunt-contrib-coffee": "~0.13.0",
     "grunt-shell": "^1.1.2",
     "mongoose": "^3.8.25",
-    "restify": "^3.0.1"
+    "restify": "^3.0.1",
+    "should": "*"
   },
   "dependencies": {
-    "async": "^0.9.0",
-    "grunt-shell": "^1.1.2",
-    "grunt-contrib-coffee": "^0.13.0",
-    "grunt": "^0.4.5",
-    "mongoose": "^3.8.25",
-    "restify": "^3.0.1"
+    "async": "0.9.0",
+    "mongoose": "4.4.3",
+    "restify": "3.0.1"
   },
   "repository": {
     "type": "git",

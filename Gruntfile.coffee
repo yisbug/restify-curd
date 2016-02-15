@@ -4,7 +4,7 @@ module.exports = (grunt)->
     grunt.initConfig
         shell:
             mocha:
-                command:'mocha --compilers coffee:coffee-script/register'
+                command:'mocha --compilers coffee:coffee-script/register -b'
         coffee:
             dev:
                 src:['coffee/*.coffee']
@@ -22,4 +22,3 @@ module.exports = (grunt)->
         fileName = 'test/'+fileName if not /^test\//.test fileName
         grunt.config ['shell','mocha','command'],'mocha --compilers coffee:coffee-script/register -w ' + fileName + ' -b' if arg1
         grunt.task.run 'shell:mocha'
-        

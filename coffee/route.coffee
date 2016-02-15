@@ -16,6 +16,7 @@ module.exports = (Model,ids=[])->
         baseQuery._id = req.params[baseId]
         if copyIds.length>2
             baseQuery[copyIds[1..-2].join('.')+'._id'] = req.params[prevId]
+        baseQuery._id = mongoose.Types.ObjectId baseQuery._id if baseQuery._id
         baseQuery
 
     # 获取详细查询条件
@@ -23,8 +24,11 @@ module.exports = (Model,ids=[])->
         baseQuery = {}
         for id,i in copyIds
             head = copyIds[1..i].join('.')
-            if head then head+='._id' else head = '_id'
-            baseQuery[head] = req.params[id+'id']
+            if head
+                head+='._id'
+                baseQuery[head] = req.params[id+'id']
+            else
+                baseQuery._id = mongoose.Types.ObjectId req.params[id+'id']
         baseQuery
 
 
@@ -59,7 +63,7 @@ module.exports = (Model,ids=[])->
             sortby = req.params.sortby or 'createAt'
             desc = req.params.desc or 'desc'
             fields = req.params.fields
-            async.parallel 
+            async.parallel
                 count:(cb)->
                     Model.count cb
                 list:(cb)->
@@ -111,7 +115,7 @@ module.exports = (Model,ids=[])->
                 update['$push'] = {}
                 update['$push'][copyIds[1..].join('.$.')] = req.body
                 query = getBaseQuery req
-                Model.findOneAndUpdate query,update,cb
+                Model.findOneAndUpdate query,update,{new:true},cb
             else
                 Model.create req.body,cb
         doGet:(req,res,next)->
@@ -126,6 +130,8 @@ module.exports = (Model,ids=[])->
             update = {}
             query = getMoreQuery req
             not req.body and req.body = {}
+            # console.log req.params,query,copyIds,typeof query._id,11111111111111,req.body
+            # console.log req.body,12123,copyIds,query,typeof query._id,req.body,req.params
             if copyIds.length > 1
                 Model.findOne query,(err,doc)->
                     return res.send 500,err if err
@@ -136,9 +142,9 @@ module.exports = (Model,ids=[])->
                         return res.send 500,err if err
                         res.send 200,result
             else
-                Model.findOneAndUpdate query,{$set:req.body},(err,doc)->
+                Model.findOneAndUpdate query,{$set:req.body},{new:true},(err,doc)->
                     return res.send 500,err if err
-                    res.send 200,doc
+                    res.send 200,doc.toObject()
         doDelete:(req,res,next)->
             if copyIds.length > 1
                 update = {}
@@ -148,10 +154,10 @@ module.exports = (Model,ids=[])->
                     $pull:update
                 }
             else
-                query=Model.remove _id:req.params[baseId]
+                query=Model.remove _id:mongoose.Types.ObjectId req.params[baseId]
             query.exec (err,rows)->
                 return res.send 500,err if err
-                res.send 200,rows
+                res.send 200
 
         doDeleteAll:(req,res,next)->
             if copyIds.length > 1
@@ -163,5 +169,5 @@ module.exports = (Model,ids=[])->
                 query = Model.remove query
             query.exec (err,rows)->
                 return res.send 500,err if err
-                res.send 200,rows
+                res.send 200
     }
