@@ -1,0 +1,584 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for restify-curd\coffee\route.coffee</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">all files</a> / <a href="index.html">restify-curd/coffee/</a> route.coffee
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">93.53% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>130/139</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">78.26% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>36/46</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>23/23</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>126/126</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">39×</span>
+<span class="cline-any cline-yes">39×</span>
+<span class="cline-any cline-yes">39×</span>
+<span class="cline-any cline-yes">16×</span>
+<span class="cline-any cline-yes">39×</span>
+<span class="cline-any cline-yes">39×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-yes">28×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">mongoose = require 'mongoose'
+async = require 'async'
+# 参数:model,内嵌文档的字段名
+&nbsp;
+module.exports = (Model,ids=[])-&gt;
+    copyIds = (k for k in ids)
+    parentName = Model.modelName # 模型名称
+    # baseNameOfID = "#{ids[0]}id"
+    baseId = copyIds[0]+'id'
+    lastId = copyIds[copyIds.length-1]+'id'
+    prevId = copyIds[copyIds.length-2]+'id'
+&nbsp;
+    # 获取基础查询条件
+    getBaseQuery = (req)-&gt;
+        baseQuery = {}
+        baseQuery._id = req.params[baseId]
+        if copyIds.length&gt;2
+            baseQuery[copyIds[1..-2].join('.')+'._id'] = req.params[prevId]
+        <span class="missing-if-branch" title="else path not taken" >E</span>baseQuery._id = mongoose.Types.ObjectId baseQuery._id if baseQuery._id
+        baseQuery
+&nbsp;
+    # 获取详细查询条件
+    getMoreQuery = (req)-&gt;
+        baseQuery = {}
+        for id,i in copyIds
+            head = copyIds[1..i].join('.')
+            if head
+                head+='._id'
+                baseQuery[head] = req.params[id+'id']
+            else
+                baseQuery._id = mongoose.Types.ObjectId req.params[id+'id']
+        baseQuery
+&nbsp;
+&nbsp;
+    # 获取基础返回结果
+    getBaseResult = (req,doc)-&gt;
+        result = doc
+        if copyIds.length&gt;2
+            for id in copyIds[1..-2]
+                result = result[id].id(req.params[id+'id'])
+        result
+&nbsp;
+    # 获取详细返回结果
+    getMoreResult = (req,doc)-&gt;
+        result = doc
+        if copyIds.length&gt;1
+            for id in copyIds[1..]
+                result = result[id].id(req.params[id+'id'])
+        result
+    # 获取基础的列表数据
+    getBaseList = (req,doc)-&gt;
+        result = doc
+        if copyIds.length is 2
+            return result[copyIds[1]]
+        else
+            for id in copyIds[1..-2]
+                result = result[id].id(req.params[id+'id'])
+            return result[copyIds[copyIds.length-1]]
+    {
+        doGetList:(req,res,next)-&gt;
+            limit = Number(req.params.limit) or 0
+            page = Number(req.params.page) or 1
+            sortby = req.params.sortby or 'createAt'
+            desc = req.params.desc or 'desc'
+            fields = req.params.fields
+            async.parallel
+                count:(cb)-&gt;
+                    Model.count cb
+                list:(cb)-&gt;
+                    # 直接查询
+                    if ids.length is 1
+                        # 是否查询指定字段
+                        if fields
+                            query = Model.find query,fields.split(',').join ' '
+                        else
+                            query = Model.find query
+                        # 排序
+                        sort = {}
+                        sort[sortby]=desc
+                        query.sort sort
+                        # 分页
+                        if limit
+                            query.limit limit
+                            query.skip (page-1)*limit
+                        query.exec cb
+                    else
+                        query = Model.findOne getBaseQuery(req)
+                        query.exec (err,doc)-&gt;
+<span class="cstat-no" title="statement not covered" >                            <span class="missing-if-branch" title="if path not taken" >I</span>return cb err</span> if err
+                            cb err,getBaseList(req,doc)
+            ,(err,result)-&gt;
+<span class="cstat-no" title="statement not covered" >                <span class="missing-if-branch" title="if path not taken" >I</span>return res.send 500,err</span> if err
+                result.limit = limit
+                result.page = page
+                result.sortby = sortby
+                result.desc = desc
+                res.send 200,result
+        doPost:(req,res,next)-&gt;
+            not req.body and req.body={}
+            req.body.createAt = Date.now()
+            req.body.random = Math.random()
+            cb = (err,doc)-&gt;
+<span class="cstat-no" title="statement not covered" >                <span class="missing-if-branch" title="if path not taken" >I</span>return res.send 500,err</span> if err
+                if copyIds.length &gt; 1
+                    result = doc
+                    for id in copyIds[1..]
+                        result=result[id]
+                    # 子文档操作时返回最后一条记录
+                    docs = getBaseResult(req,doc)[copyIds[copyIds.length-1]]
+                    res.send 200,docs[docs.length-1]
+                else
+                    res.send 200,doc
+            if copyIds.length &gt; 1
+                update = {}
+                update['$push'] = {}
+                update['$push'][copyIds[1..].join('.$.')] = req.body
+                query = getBaseQuery req
+                Model.findOneAndUpdate query,update,{new:true},cb
+            else
+                Model.create req.body,cb
+        doGet:(req,res,next)-&gt;
+            Model.findOne getBaseQuery(req)
+            ,(err,doc)-&gt;
+<span class="cstat-no" title="statement not covered" >                <span class="missing-if-branch" title="if path not taken" >I</span>return res.send 500,err</span> if err
+                res.send 200,getMoreResult(req,doc)
+&nbsp;
+        # 操作子文档时，更新操作非原子操作
+        # https://jira.mongodb.org/browse/SERVER-831
+        doEdit:(req,res,next)-&gt;
+            update = {}
+            query = getMoreQuery req
+            not req.body and req.body = {}
+            # console.log req.params,query,copyIds,typeof query._id,11111111111111,req.body
+            # console.log req.body,12123,copyIds,query,typeof query._id,req.body,req.params
+            if copyIds.length &gt; 1
+                Model.findOne query,(err,doc)-&gt;
+<span class="cstat-no" title="statement not covered" >                    <span class="missing-if-branch" title="if path not taken" >I</span>return res.send 500,err</span> if err
+                    result = getMoreResult req,doc
+                    for k,v of req.body
+                        result[k]=v
+                    doc.save (err,doc)-&gt;
+<span class="cstat-no" title="statement not covered" >                        <span class="missing-if-branch" title="if path not taken" >I</span>return res.send 500,err</span> if err
+                        res.send 200,result
+            else
+                Model.findOneAndUpdate query,{$set:req.body},{new:true},(err,doc)-&gt;
+<span class="cstat-no" title="statement not covered" >                    <span class="missing-if-branch" title="if path not taken" >I</span>return res.send 500,err</span> if err
+                    res.send 200,doc.toObject()
+        doDelete:(req,res,next)-&gt;
+            if copyIds.length &gt; 1
+                update = {}
+                update[copyIds[1..].join('.$.')] = _id:req.params[lastId]
+                query=Model.update getMoreQuery(req)
+                ,{
+                    $pull:update
+                }
+            else
+                query=Model.remove _id:mongoose.Types.ObjectId req.params[baseId]
+            query.exec (err,rows)-&gt;
+<span class="cstat-no" title="statement not covered" >                <span class="missing-if-branch" title="if path not taken" >I</span>return res.send 500,err</span> if err
+                res.send 200
+&nbsp;
+        doDeleteAll:(req,res,next)-&gt;
+            if copyIds.length &gt; 1
+                query = {}
+                query[copyIds[1..].join('.$.')] = req.query or {}
+                query = Model.update getBaseQuery(req),{$pull:query}
+            else
+                query = req.query or {}
+                query = Model.remove query
+            query.exec (err,rows)-&gt;
+<span class="cstat-no" title="statement not covered" >                <span class="missing-if-branch" title="if path not taken" >I</span>return res.send 500,err</span> if err
+                res.send 200
+    }
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Feb 16 2016 17:31:21 GMT+0800 (中国标准时间)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>
