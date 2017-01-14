@@ -1,6 +1,6 @@
 {
   "name": "restify-curd",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "npm install restify-curd",
   "main": "index.js",
   "directories": {
@@ -23,12 +23,12 @@
     "grunt-shell": "^1.1.2",
     "istanbul": "^0.4.2",
     "mocha": "^2.4.5",
-    "restify": "^3.0.1",
+    "restify": "^4.3.0",
     "should": "^8.2.2"
   },
   "dependencies": {
     "async": "0.9.0",
-    "mongoose": "4.4.3"
+    "mongoose": "4.7.6"
   },
   "repository": {
     "type": "git",
